@@ -2,7 +2,7 @@ import { spawn } from 'child_process'
 import { toArrayAsync, isntNull } from '@blackglory/prelude'
 import { FailedError, KilledError } from '@src/errors.js'
 import { removeTrailingNewline } from '@src/utils.js'
-import { shellFilename } from './utils.js'
+import { shellFilename, preprocessCommand } from './utils.js'
 
 /**
  * @throws {FailedError}
@@ -19,7 +19,7 @@ export function evaluate(
     signal?.throwIfAborted()
 
     const childProcess = spawn(
-      command.trim()
+      preprocessCommand(command)
     , {
         shell: shellFilename
       , detached: true
