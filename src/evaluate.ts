@@ -1,7 +1,7 @@
 import { spawn } from 'child_process'
 import { toArrayAsync, isntNull } from '@blackglory/prelude'
-import { FailedError, KilledError } from './errors.js'
-import { removeTrailingNewline } from './utils.js'
+import { FailedError, KilledError } from '@src/errors.js'
+import { removeTrailingNewline } from '@src/utils.js'
 
 /**
  * @throws {FailedError}
@@ -10,7 +10,10 @@ import { removeTrailingNewline } from './utils.js'
 export function evaluate(
   file: string
 , args: string[]
-, { signal }: { signal?: AbortSignal } = {}
+, { signal, posixSignalOnAbort }: {
+    signal?: AbortSignal
+    posixSignalOnAbort?: NodeJS.Signals
+  } = {}
 ): Promise<string> {
   return new Promise((resolve, reject) => {
     signal?.throwIfAborted()
@@ -20,7 +23,9 @@ export function evaluate(
     , args
     , {
         shell: false
+
       , signal
+      , killSignal: posixSignalOnAbort
       }
     )
 

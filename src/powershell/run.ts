@@ -2,14 +2,14 @@ import { spawn } from 'child_process'
 import { toArrayAsync, isntNull } from '@blackglory/prelude'
 import { FailedError, KilledError } from '@src/errors.js'
 import { removeTrailingNewline } from '@src/utils.js'
+import { shellFilename } from './utils.js'
 
 /**
  * @throws {FailedError}
  * @throws {KilledError}
  */
 export async function run(
-  file: string
-, args: string[]
+  command: string
 , { signal, posixSignalOnAbort }: {
     signal?: AbortSignal
     posixSignalOnAbort?: NodeJS.Signals
@@ -19,15 +19,20 @@ export async function run(
     signal?.throwIfAborted()
 
     const childProcess = spawn(
-      file
-    , args
+      command
     , {
-        shell: false
+        shell: shellFilename
+      , detached: true
 
       , signal
       , killSignal: posixSignalOnAbort
       }
     )
+    signal?.addEventListener('abort', () => {
+      if (childProcess.pid !== undefined) {
+        process.kill(-childProcess.pid, posixSignalOnAbort)
+      }
+    })
 
     childProcess.stderr.setEncoding('utf-8')
     const stderr = toArrayAsync(childProcess.stderr)

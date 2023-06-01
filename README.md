@@ -25,7 +25,10 @@ class KilledError extends CustomError {}
 function run(
   file: string
 , args: string[]
-, options?: { signal?: AbortSignal }
+, options?: {
+    signal?: AbortSignal
+    posixSignalOnAbort?: NodeJS.Signals
+  }
 ): Promise<void>
 ```
 
@@ -40,8 +43,73 @@ Please note that it runs without a shell.
 function evaluate(
   file: string
 , args: string[]
-, options?: { signal?: AbortSignal }
+, options?: {
+    signal?: AbortSignal
+    posixSignalOnAbort?: NodeJS.Signals
+  }
 ): Promise<string>
 ```
 
 Please note that it runs without a shell.
+
+### Bash
+#### run
+```ts
+/**
+ * @throws {FailedError}
+ * @throws {KilledError}
+ */
+function run(
+  command: string
+, options?: {
+    signal?: AbortSignal
+    posixSignalOnAbort?: NodeJS.Signals
+  }
+): Promise<void>
+```
+
+#### evaluate
+```ts
+/**
+ * @throws {FailedError}
+ * @throws {KilledError}
+ */
+function evaluate(
+  command: string
+, options?: {
+    signal?: AbortSignal
+    posixSignalOnAbort?: NodeJS.Signals
+  }
+): Promise<string>
+```
+
+### PowerShell
+#### run
+```ts
+/**
+ * @throws {FailedError}
+ * @throws {KilledError}
+ */
+function run(
+  command: string
+, options?: {
+    signal?: AbortSignal
+    posixSignalOnAbort?: NodeJS.Signals
+  }
+): Promise<void>
+```
+
+### evaluate
+```ts
+/**
+ * @throws {FailedError}
+ * @throws {KilledError}
+ */
+function evaluate(
+  command: string
+, options?: {
+    signal?: AbortSignal
+    posixSignalOnAbort?: NodeJS.Signals
+  }
+): Promise<string>
+```
