@@ -11,7 +11,7 @@ describe('evaluate', () => {
       `
     ])
 
-    expect(result).toBe('hello world')
+    expect(result).toBe('hello world\n')
   })
 
   test('exit code isnt 0', async () => {
@@ -25,7 +25,7 @@ describe('evaluate', () => {
 
     expect(err).toBeInstanceOf(FailedError)
     expect((err as FailedError).code).toBe(1)
-    expect(err?.message).toBe('oops')
+    expect(err?.message).toBe('oops\n')
   })
 
   test('killed', async () => {

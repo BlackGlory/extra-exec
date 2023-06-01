@@ -25,7 +25,7 @@ describe('run', () => {
 
     expect(err).toBeInstanceOf(FailedError)
     expect((err as FailedError).code).toBe(1)
-    expect(err?.message).toBe('oops')
+    expect(err?.message).toBe('oops\n')
   })
 
   test('killed', async () => {

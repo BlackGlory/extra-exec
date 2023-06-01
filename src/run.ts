@@ -1,7 +1,6 @@
 import { spawn } from 'child_process'
 import { toArrayAsync, isntNull } from '@blackglory/prelude'
 import { FailedError, KilledError } from '@src/errors.js'
-import { removeTrailingNewline } from '@src/utils.js'
 
 /**
  * @throws {FailedError}
@@ -38,7 +37,7 @@ export async function run(
         if (code === 0) {
           resolve()
         } else {
-          const message = removeTrailingNewline((await stderr).join(''))
+          const message = (await stderr).join('')
           reject(new FailedError(code, message))
         }
       } else {
