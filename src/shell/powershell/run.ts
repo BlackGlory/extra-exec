@@ -1,18 +1,18 @@
-import { evaluate as shellEvaluate } from '@src/shell/evaluate.js'
+import { run as shellRun } from '@shell/run.js'
 import { shell, preprocessCommand } from './utils.js'
 
 /**
  * @throws {FailedError}
  * @throws {KilledError}
  */
-export function evaluate(
+export async function run(
   command: string
 , options?: {
     signal?: AbortSignal
     posixSignalOnAbort?: NodeJS.Signals
   }
-): Promise<string> {
-  return shellEvaluate(
+): Promise<void> {
+  return shellRun(
     shell
   , preprocessCommand(command)
   , options

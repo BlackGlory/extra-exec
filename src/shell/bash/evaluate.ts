@@ -1,4 +1,4 @@
-import { evaluate as shellEvaluate } from '@src/shell/evaluate.js'
+import { evaluate as shellEvaluate } from '@shell/evaluate.js'
 import { shell, preprocessCommand } from './utils.js'
 
 /**

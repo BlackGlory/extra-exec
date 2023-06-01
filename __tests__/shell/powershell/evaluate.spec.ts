@@ -1,4 +1,4 @@
-import { evaluate } from '@src/bash/evaluate.js'
+import { evaluate } from '@shell/powershell/evaluate.js'
 import { FailedError, KilledError } from '@src/errors.js'
 import { getErrorPromise } from 'return-style'
 import { AbortController, AbortError } from 'extra-abort'
@@ -6,7 +6,7 @@ import { AbortController, AbortError } from 'extra-abort'
 describe('evaluate', () => {
   test('exit code is 0', async () => {
     const result = await evaluate(`
-      node --eval \\
+      node --eval \`
         'console.log("hello world")'
     `)
 
@@ -15,7 +15,7 @@ describe('evaluate', () => {
 
   test('exit code isnt 0', async () => {
     const err = await getErrorPromise(evaluate(`
-      node --eval \\
+      node --eval \`
         'console.log("hello world")
         console.error("oops")
         process.exit(1)'
@@ -28,8 +28,8 @@ describe('evaluate', () => {
 
   test('killed', async () => {
     const err = await getErrorPromise(evaluate(`
-      node --eval \\
-        "process.kill($$, 'SIGKILL')"
+      node --eval \`
+        "process.kill($PID, 'SIGKILL')"
     `))
 
     expect(err).toBeInstanceOf(KilledError)
@@ -43,7 +43,7 @@ describe('evaluate', () => {
       const err = await getErrorPromise(
         evaluate(
           `
-            node --eval \\
+            node --eval \`
               'while (true) {}'
           `
         , { signal: controller.signal }
@@ -60,7 +60,7 @@ describe('evaluate', () => {
       const err = await getErrorPromise(
         evaluate(
           `
-            node --eval \\
+            node --eval \`
               'while (true) {}'
           `
         , { signal: controller.signal }
@@ -75,7 +75,7 @@ describe('evaluate', () => {
 
       const result = await evaluate(
         `
-          node --eval \\
+          node --eval \`
             'for (let i = 1e5; i--;) {}'
         `
       , { signal: controller.signal }

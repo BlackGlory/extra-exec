@@ -1,21 +1,21 @@
-import { run } from '@src/powershell/run.js'
+import { evaluate } from '@shell/bash/evaluate.js'
 import { FailedError, KilledError } from '@src/errors.js'
 import { getErrorPromise } from 'return-style'
 import { AbortController, AbortError } from 'extra-abort'
 
-describe('run', () => {
+describe('evaluate', () => {
   test('exit code is 0', async () => {
-    const result = await run(`
-      node --eval \`
+    const result = await evaluate(`
+      node --eval \\
         'console.log("hello world")'
     `)
 
-    expect(result).toBe(undefined)
+    expect(result).toBe('hello world')
   })
 
   test('exit code isnt 0', async () => {
-    const err = await getErrorPromise(run(`
-      node --eval \`
+    const err = await getErrorPromise(evaluate(`
+      node --eval \\
         'console.log("hello world")
         console.error("oops")
         process.exit(1)'
@@ -27,9 +27,9 @@ describe('run', () => {
   })
 
   test('killed', async () => {
-    const err = await getErrorPromise(run(`
-      node --eval \`
-        "process.kill($PID, 'SIGKILL')"
+    const err = await getErrorPromise(evaluate(`
+      node --eval \\
+        "process.kill($$, 'SIGKILL')"
     `))
 
     expect(err).toBeInstanceOf(KilledError)
@@ -41,9 +41,9 @@ describe('run', () => {
       controller.abort()
 
       const err = await getErrorPromise(
-        run(
+        evaluate(
           `
-            node --eval \`
+            node --eval \\
               'while (true) {}'
           `
         , { signal: controller.signal }
@@ -58,9 +58,9 @@ describe('run', () => {
 
       setTimeout(() => controller.abort(), 1000)
       const err = await getErrorPromise(
-        run(
+        evaluate(
           `
-            node --eval \`
+            node --eval \\
               'while (true) {}'
           `
         , { signal: controller.signal }
@@ -73,15 +73,15 @@ describe('run', () => {
     test('signal isnt aborted', async () => {
       const controller = new AbortController()
 
-      const result = await run(
+      const result = await evaluate(
         `
-          node --eval \`
+          node --eval \\
             'for (let i = 1e5; i--;) {}'
         `
       , { signal: controller.signal }
       )
 
-      expect(result).toBe(undefined)
+      expect(result).toBe('')
     })
   })
 })

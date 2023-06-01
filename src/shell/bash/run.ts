@@ -1,4 +1,4 @@
-import { run as shellRun } from '@src/shell/run.js'
+import { run as shellRun } from '@shell/run.js'
 import { shell, preprocessCommand } from './utils.js'
 
 /**
@@ -7,7 +7,7 @@ import { shell, preprocessCommand } from './utils.js'
  */
 export async function run(
   command: string
-, options: {
+, options?: {
     signal?: AbortSignal
     posixSignalOnAbort?: NodeJS.Signals
   }

@@ -8,6 +8,7 @@
   , "baseUrl": "."
   , "paths": {
       "@src/*": ["src/*"]
+    , "@shell/*": ["src/shell/*"]
     , "@utils/*": ["src/utils/*"]
     , "@test/*": ["__tests__/*"]
     }
