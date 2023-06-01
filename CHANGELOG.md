@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.1](https://github.com/BlackGlory/extra-exec/compare/v0.1.0...v0.1.1) (2023-06-01)
+
+
+### Bug Fixes
+
+* keep trailing newlines ([38693e2](https://github.com/BlackGlory/extra-exec/commit/38693e259a9dd1ef26ce428f4bc9911f3a1c4caa))
+
 ## 0.1.0 (2023-06-01)
 
 
