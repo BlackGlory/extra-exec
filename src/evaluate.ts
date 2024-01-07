@@ -31,6 +31,7 @@ export function evaluate(
 
     if (interactive) {
       childProcess.stdout.pipe(process.stdout)
+      childProcess.stderr.pipe(process.stderr)
       process.stdin.pipe(childProcess.stdin)
     }
 

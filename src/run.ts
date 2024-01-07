@@ -1,5 +1,5 @@
 import { spawn } from 'child_process'
-import { assert, toArrayAsync, isntNull } from '@blackglory/prelude'
+import { toArrayAsync, isntNull } from '@blackglory/prelude'
 import { FailedError, KilledError } from '@src/errors.js'
 
 /**
@@ -23,16 +23,18 @@ export async function run(
     , args
     , {
         shell: false
-      , stdio: interactive
-             ? ['inherit', 'inherit', 'pipe']
-             : 'pipe'
 
       , signal
       , killSignal: posixSignalOnAbort
       }
     )
 
-    assert(childProcess.stderr)
+    if (interactive) {
+      childProcess.stdout.pipe(process.stdout)
+      childProcess.stderr.pipe(process.stderr)
+      process.stdin.pipe(childProcess.stdin)
+    }
+
     childProcess.stderr.setEncoding('utf-8')
     const stderr = toArrayAsync(childProcess.stderr)
 
