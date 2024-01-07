@@ -3,13 +3,16 @@ import { FailedError, KilledError } from '@src/errors.js'
 import { getErrorPromise } from 'return-style'
 import { AbortController, AbortError } from 'extra-abort'
 
-describe('run', () => {
+describe.each([
+  ['interactive: false', false]
+, ['interactive: true', true]
+])('run (%s)', (_, interactive) => {
   test('exit code is 0', async () => {
     const result = await run('node', [
       '--eval', `
         console.log('hello world')
       `
-    ])
+    ], { interactive })
 
     expect(result).toBe(undefined)
   })
@@ -21,7 +24,7 @@ describe('run', () => {
         console.error('oops')
         process.exit(1)
       `
-    ]))
+    ], { interactive }))
 
     expect(err).toBeInstanceOf(FailedError)
     expect((err as FailedError).code).toBe(1)
@@ -33,7 +36,7 @@ describe('run', () => {
       '--eval', `
         process.kill(process.pid, 'SIGKILL')
       `
-    ]))
+    ], { interactive }))
 
     expect(err).toBeInstanceOf(KilledError)
   })
@@ -50,7 +53,10 @@ describe('run', () => {
               while (true) {}
             `
           ]
-        , { signal: controller.signal }
+        , {
+            interactive
+          , signal: controller.signal
+          }
         )
       )
 
@@ -68,7 +74,10 @@ describe('run', () => {
               while (true) {}
             `
           ]
-        , { signal: controller.signal }
+        , {
+            interactive
+          , signal: controller.signal
+          }
         )
       )
 
@@ -84,7 +93,10 @@ describe('run', () => {
             for (let i = 1e5; i--;) {}
           `
         ]
-      , { signal: controller.signal }
+      , {
+          interactive
+        , signal: controller.signal
+        }
       )
 
       expect(result).toBe(undefined)

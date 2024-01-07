@@ -26,6 +26,7 @@ function run(
   file: string
 , args: string[]
 , options?: {
+    interactive?: boolean = false
     signal?: AbortSignal
     posixSignalOnAbort?: NodeJS.Signals
   }
@@ -44,6 +45,7 @@ function evaluate(
   file: string
 , args: string[]
 , options?: {
+    interactive?: boolean = false
     signal?: AbortSignal
     posixSignalOnAbort?: NodeJS.Signals
   }
@@ -62,6 +64,7 @@ Please note that it runs without a shell.
 function run(
   command: string
 , options?: {
+    interactive?: boolean = false
     signal?: AbortSignal
     posixSignalOnAbort?: NodeJS.Signals
   }
@@ -77,6 +80,7 @@ function run(
 function evaluate(
   command: string
 , options?: {
+    interactive?: boolean = false
     signal?: AbortSignal
     posixSignalOnAbort?: NodeJS.Signals
   }
@@ -93,6 +97,7 @@ function evaluate(
 function run(
   command: string
 , options?: {
+    interactive?: boolean = false
     signal?: AbortSignal
     posixSignalOnAbort?: NodeJS.Signals
   }
@@ -108,6 +113,7 @@ function run(
 function evaluate(
   command: string
 , options?: {
+    interactive?: boolean = false
     signal?: AbortSignal
     posixSignalOnAbort?: NodeJS.Signals
   }

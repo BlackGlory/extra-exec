@@ -9,7 +9,8 @@ import { FailedError, KilledError } from '@src/errors.js'
 export function evaluate(
   shell: string
 , command: string
-, { signal, posixSignalOnAbort }: {
+, { interactive = false, signal, posixSignalOnAbort }: {
+    interactive?: boolean
     signal?: AbortSignal
     posixSignalOnAbort?: NodeJS.Signals
   } = {}
@@ -32,6 +33,11 @@ export function evaluate(
         process.kill(-childProcess.pid, posixSignalOnAbort)
       }
     })
+
+    if (interactive) {
+      childProcess.stdout.pipe(process.stdout)
+      process.stdin.pipe(childProcess.stdin)
+    }
 
     childProcess.stdout.setEncoding('utf-8')
     const stdout = toArrayAsync(childProcess.stdout)

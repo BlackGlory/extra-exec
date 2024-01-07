@@ -3,12 +3,15 @@ import { FailedError, KilledError } from '@src/errors.js'
 import { getErrorPromise } from 'return-style'
 import { AbortController, AbortError } from 'extra-abort'
 
-describe('evaluate', () => {
+describe.each([
+  ['interactive: false', false]
+, ['interactive: true', true]
+])('evaluate (%s)', (_, interactive) => {
   test('exit code is 0', async () => {
     const result = await evaluate(`
       node --eval \`
         'console.log("hello world")'
-    `)
+    `, { interactive })
 
     expect(result).toBe('hello world\n')
   })
@@ -19,7 +22,7 @@ describe('evaluate', () => {
         'console.log("hello world")
         console.error("oops")
         process.exit(1)'
-    `))
+    `, { interactive }))
 
     expect(err).toBeInstanceOf(FailedError)
     expect((err as FailedError).code).toBe(1)
@@ -30,7 +33,7 @@ describe('evaluate', () => {
     const err = await getErrorPromise(evaluate(`
       node --eval \`
         "process.kill($PID, 'SIGKILL')"
-    `))
+    `, { interactive }))
 
     expect(err).toBeInstanceOf(KilledError)
   })
@@ -46,7 +49,10 @@ describe('evaluate', () => {
             node --eval \`
               'while (true) {}'
           `
-        , { signal: controller.signal }
+        , {
+            interactive
+          , signal: controller.signal
+          }
         )
       )
 
@@ -63,7 +69,10 @@ describe('evaluate', () => {
             node --eval \`
               'while (true) {}'
           `
-        , { signal: controller.signal }
+        , {
+            interactive
+          , signal: controller.signal
+          }
         )
       )
 
@@ -78,7 +87,10 @@ describe('evaluate', () => {
           node --eval \`
             'for (let i = 1e5; i--;) {}'
         `
-      , { signal: controller.signal }
+      , {
+          interactive
+        , signal: controller.signal
+        }
       )
 
       expect(result).toBe('')

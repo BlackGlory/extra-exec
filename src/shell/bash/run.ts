@@ -8,6 +8,7 @@ import { shell, preprocessCommand } from './utils.js'
 export async function run(
   command: string
 , options?: {
+    interactive?: boolean
     signal?: AbortSignal
     posixSignalOnAbort?: NodeJS.Signals
   }

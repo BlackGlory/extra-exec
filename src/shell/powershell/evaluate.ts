@@ -8,6 +8,7 @@ import { shell, preprocessCommand } from './utils.js'
 export function evaluate(
   command: string
 , options?: {
+    interactive?: boolean
     signal?: AbortSignal
     posixSignalOnAbort?: NodeJS.Signals
   }

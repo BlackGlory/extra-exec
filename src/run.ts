@@ -1,5 +1,5 @@
 import { spawn } from 'child_process'
-import { toArrayAsync, isntNull } from '@blackglory/prelude'
+import { assert, toArrayAsync, isntNull } from '@blackglory/prelude'
 import { FailedError, KilledError } from '@src/errors.js'
 
 /**
@@ -9,7 +9,8 @@ import { FailedError, KilledError } from '@src/errors.js'
 export async function run(
   file: string
 , args: string[]
-, { signal, posixSignalOnAbort }: {
+, { interactive = false, signal, posixSignalOnAbort }: {
+    interactive?: boolean
     signal?: AbortSignal
     posixSignalOnAbort?: NodeJS.Signals
   } = {}
@@ -22,12 +23,16 @@ export async function run(
     , args
     , {
         shell: false
+      , stdio: interactive
+             ? ['inherit', 'inherit', 'pipe']
+             : 'pipe'
 
       , signal
       , killSignal: posixSignalOnAbort
       }
     )
 
+    assert(childProcess.stderr)
     childProcess.stderr.setEncoding('utf-8')
     const stderr = toArrayAsync(childProcess.stderr)
 
