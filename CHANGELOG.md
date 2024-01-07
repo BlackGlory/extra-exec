@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://github.com/BlackGlory/extra-exec/compare/v0.1.2...v0.1.3) (2024-01-07)
+
+
+### Features
+
+* add `options.interactive` ([6baaa51](https://github.com/BlackGlory/extra-exec/commit/6baaa51937ac128a5944ba9922c2135a87acb946))
+
+
+### Bug Fixes
+
+* **interactive:** redirect stderr ([02f56bc](https://github.com/BlackGlory/extra-exec/commit/02f56bcf81d16b790dedfc7b6fe67c4102573a51))
+
 ### [0.1.2](https://github.com/BlackGlory/extra-exec/compare/v0.1.1...v0.1.2) (2023-06-10)
 
 
