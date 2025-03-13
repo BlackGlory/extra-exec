@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.4](https://github.com/BlackGlory/extra-exec/compare/v0.1.3...v0.1.4) (2025-03-13)
+
+
+### Features
+
+* add `options.mergeStdoutToStderr`, `options.mergeStderrToStdout` ([580a5de](https://github.com/BlackGlory/extra-exec/commit/580a5de74793381496b5c378a6cbc6cfc49f8c74))
+
 ### [0.1.3](https://github.com/BlackGlory/extra-exec/compare/v0.1.2...v0.1.3) (2024-01-07)
 
 
