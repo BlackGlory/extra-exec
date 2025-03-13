@@ -43,11 +43,12 @@ describe.each([
       expect(err?.message).toBe('oops\n')
     })
 
-    test('mergeStdoutToStderr', async () => {
+    test('mergeStdoutToStderr = true', async () => {
       const err = await getErrorPromise(evaluate(`
         node --eval \`
           'console.log("hello world")
           console.error("oops")
+          await new Promise(setImmediate)
           process.exit(1)'
       `, { interactive, mergeStdoutToStderr: true }))
 

@@ -48,6 +48,7 @@ describe.each([
         node --eval \\
           'console.log("hello world")
           console.error("oops")
+          await new Promise(setImmediate)
           process.exit(1)'
       `, { interactive, mergeStdoutToStderr: true }))
 
