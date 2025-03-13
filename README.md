@@ -47,8 +47,8 @@ function evaluate(
 , args: string[]
 , options?: {
     interactive?: boolean = false
-    mergeStdoutToStderr?: boolean
-    mergeStderrToStdout?: boolean
+    mergeStdoutToStderr?: boolean = false
+    mergeStderrToStdout?: boolean = false
     signal?: AbortSignal
     posixSignalOnAbort?: NodeJS.Signals
   }
@@ -68,7 +68,7 @@ function run(
   command: string
 , options?: {
     interactive?: boolean = false
-    mergeStdoutToStderr?: boolean
+    mergeStdoutToStderr?: boolean = false
     signal?: AbortSignal
     posixSignalOnAbort?: NodeJS.Signals
   }
@@ -85,8 +85,8 @@ function evaluate(
   command: string
 , options?: {
     interactive?: boolean = false
-    mergeStdoutToStderr?: boolean
-    mergeStderrToStdout?: boolean
+    mergeStdoutToStderr?: boolean = false
+    mergeStderrToStdout?: boolean = false
     signal?: AbortSignal
     posixSignalOnAbort?: NodeJS.Signals
   }
@@ -104,7 +104,7 @@ function run(
   command: string
 , options?: {
     interactive?: boolean = false
-    mergeStdoutToStderr?: boolean
+    mergeStdoutToStderr?: boolean = false
     signal?: AbortSignal
     posixSignalOnAbort?: NodeJS.Signals
   }
@@ -121,8 +121,8 @@ function evaluate(
   command: string
 , options?: {
     interactive?: boolean = false
-    mergeStdoutToStderr?: boolean
-    mergeStderrToStdout?: boolean
+    mergeStdoutToStderr?: boolean = false
+    mergeStderrToStdout?: boolean = false
     signal?: AbortSignal
     posixSignalOnAbort?: NodeJS.Signals
   }
