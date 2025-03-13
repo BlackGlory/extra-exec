@@ -1,12 +1,24 @@
 import { Falsy, isntFalsy } from '@blackglory/prelude'
 import { PassThrough, Readable } from 'stream'
 
-export function merge(...streams: Array<Readable | Falsy>): Readable {
-  const result = new PassThrough()
+export function mergeStreams(...streams: Array<Readable | Falsy>): Readable {
+  const upstreams = streams.filter(isntFalsy)
+  const downstream = new PassThrough()
 
-  streams
-    .filter(isntFalsy)
-    .forEach(stream => stream.pipe(result))
+  let endedUpstreams = 0
+  for (const upstream of upstreams) {
+    if (upstream.readableEnded) {
+      endedUpstreams++
+    } else {
+      upstream.pipe(downstream, { end: false })
 
-  return result
+      upstream.once('end', () => {
+        if (++endedUpstreams === upstreams.length) {
+          downstream.end()
+        }
+      })
+    }
+  }
+
+  return downstream
 }

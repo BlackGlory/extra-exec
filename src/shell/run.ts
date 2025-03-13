@@ -1,7 +1,7 @@
 import { spawn } from 'child_process'
 import { toArrayAsync, isntNull } from '@blackglory/prelude'
 import { FailedError, KilledError } from '@src/errors.js'
-import { merge } from '@src/utils.js'
+import { mergeStreams } from '@src/utils.js'
 
 /**
  * @throws {FailedError}
@@ -49,7 +49,7 @@ export async function run(
       process.stdin.pipe(childProcess.stdin)
     }
 
-    const stderr = toArrayAsync(merge(
+    const stderr = toArrayAsync(mergeStreams(
       childProcess.stderr
     , mergeStdoutToStderr && childProcess.stdout
     ))
