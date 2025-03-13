@@ -1,6 +1,7 @@
 import { spawn } from 'child_process'
 import { toArrayAsync, isntNull } from '@blackglory/prelude'
 import { FailedError, KilledError } from '@src/errors.js'
+import { merge } from './utils.js'
 
 /**
  * @throws {FailedError}
@@ -9,8 +10,14 @@ import { FailedError, KilledError } from '@src/errors.js'
 export async function run(
   file: string
 , args: string[]
-, { interactive = false, signal, posixSignalOnAbort }: {
+, {
+    interactive = false
+  , mergeStdoutToStderr = false
+  , signal
+  , posixSignalOnAbort
+  }: {
     interactive?: boolean
+    mergeStdoutToStderr?: boolean
     signal?: AbortSignal
     posixSignalOnAbort?: NodeJS.Signals
   } = {}
@@ -29,14 +36,18 @@ export async function run(
       }
     )
 
+    childProcess.stderr.setEncoding('utf-8')
+
     if (interactive) {
       childProcess.stdout.pipe(process.stdout)
       childProcess.stderr.pipe(process.stderr)
       process.stdin.pipe(childProcess.stdin)
     }
 
-    childProcess.stderr.setEncoding('utf-8')
-    const stderr = toArrayAsync(childProcess.stderr)
+    const stderr = toArrayAsync(merge(
+      childProcess.stderr
+    , mergeStdoutToStderr && childProcess.stdout
+    ))
 
     childProcess.on('error', error => reject(error))
     childProcess.on('close', async code => {

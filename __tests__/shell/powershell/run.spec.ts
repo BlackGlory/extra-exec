@@ -16,17 +16,32 @@ describe.each([
     expect(result).toBe(undefined)
   })
 
-  test('exit code isnt 0', async () => {
-    const err = await getErrorPromise(run(`
-      node --eval \`
-        'console.log("hello world")
-        console.error("oops")
-        process.exit(1)'
-    `, { interactive }))
+  describe('exit code isnt 0', () => {
+    test('general', async () => {
+      const err = await getErrorPromise(run(`
+        node --eval \`
+          'console.log("hello world")
+          console.error("oops")
+          process.exit(1)'
+      `, { interactive }))
 
-    expect(err).toBeInstanceOf(FailedError)
-    expect((err as FailedError).code).toBe(1)
-    expect(err?.message).toBe('oops\n')
+      expect(err).toBeInstanceOf(FailedError)
+      expect((err as FailedError).code).toBe(1)
+      expect(err?.message).toBe('oops\n')
+    })
+
+    test('mergeStdoutToStderr = true', async () => {
+      const err = await getErrorPromise(run(`
+        node --eval \`
+          'console.log("hello world")
+          console.error("oops")
+          process.exit(1)'
+      `, { interactive, mergeStdoutToStderr: true }))
+
+      expect(err).toBeInstanceOf(FailedError)
+      expect((err as FailedError).code).toBe(1)
+      expect(err?.message).toBe('hello world\noops\n')
+    })
   })
 
   test('killed', async () => {

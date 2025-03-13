@@ -9,6 +9,8 @@ export function evaluate(
   command: string
 , options?: {
     interactive?: boolean
+    mergeStdoutToStderr?: boolean
+    mergeStderrToStdout?: boolean
     signal?: AbortSignal
     posixSignalOnAbort?: NodeJS.Signals
   }

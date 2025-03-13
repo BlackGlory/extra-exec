@@ -1,6 +1,7 @@
 import { spawn } from 'child_process'
 import { toArrayAsync, isntNull } from '@blackglory/prelude'
 import { FailedError, KilledError } from '@src/errors.js'
+import { merge } from '@src/utils.js'
 
 /**
  * @throws {FailedError}
@@ -9,8 +10,16 @@ import { FailedError, KilledError } from '@src/errors.js'
 export function evaluate(
   shell: string
 , command: string
-, { interactive = false, signal, posixSignalOnAbort }: {
+, {
+    interactive = false
+  , mergeStdoutToStderr = false
+  , mergeStderrToStdout = false
+  , signal
+  , posixSignalOnAbort
+  }: {
     interactive?: boolean
+    mergeStdoutToStderr?: boolean
+    mergeStderrToStdout?: boolean
     signal?: AbortSignal
     posixSignalOnAbort?: NodeJS.Signals
   } = {}
@@ -34,17 +43,24 @@ export function evaluate(
       }
     })
 
+    childProcess.stdout.setEncoding('utf-8')
+    childProcess.stderr.setEncoding('utf-8')
+
     if (interactive) {
       childProcess.stdout.pipe(process.stdout)
       childProcess.stderr.pipe(process.stderr)
       process.stdin.pipe(childProcess.stdin)
     }
 
-    childProcess.stdout.setEncoding('utf-8')
-    const stdout = toArrayAsync(childProcess.stdout)
+    const stdout = toArrayAsync(merge(
+      childProcess.stdout
+    , mergeStderrToStdout && childProcess.stderr
+    ))
 
-    childProcess.stderr.setEncoding('utf-8')
-    const stderr = toArrayAsync(childProcess.stderr)
+    const stderr = toArrayAsync(merge(
+      childProcess.stderr
+    , mergeStdoutToStderr && childProcess.stdout
+    ))
 
     childProcess.on('error', error => reject(error))
     childProcess.on('close', async code => {

@@ -9,6 +9,7 @@ export async function run(
   command: string
 , options?: {
     interactive?: boolean
+    mergeStdoutToStderr?: boolean
     signal?: AbortSignal
     posixSignalOnAbort?: NodeJS.Signals
   }
