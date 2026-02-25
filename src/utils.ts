@@ -1,4 +1,4 @@
-import { Falsy, isntFalsy } from '@blackglory/prelude'
+import { Falsy, isntFalsy, isntUndefined } from '@blackglory/prelude'
 import { AbortError } from 'extra-abort'
 import { PassThrough, Readable } from 'stream'
 
@@ -28,5 +28,11 @@ export function mergeStreams(...streams: Array<Readable | Falsy>): Readable {
 }
 
 export function throwIfAborted(signal: AbortSignal): void {
-  if (signal.aborted) throw new AbortError()
+  if (signal.aborted) {
+    if (isntUndefined(signal.reason)) {
+      throw signal.reason
+    } else {
+      throw new AbortError()
+    }
+  }
 }
