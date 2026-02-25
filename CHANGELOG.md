@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.7](https://github.com/BlackGlory/extra-exec/compare/v0.1.6...v0.1.7) (2026-02-25)
+
+
+### Features
+
+* **throw-if-aborted:** improve ([17b2581](https://github.com/BlackGlory/extra-exec/commit/17b2581a4699fffd048aa725f772389d491867d0))
+
 ### [0.1.6](https://github.com/BlackGlory/extra-exec/compare/v0.1.5...v0.1.6) (2026-02-25)
 
 
