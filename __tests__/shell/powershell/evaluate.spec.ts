@@ -1,3 +1,4 @@
+import { describe, test, expect } from 'vitest'
 import { evaluate } from '@shell/powershell/evaluate.js'
 import { FailedError, KilledError } from '@src/errors.js'
 import { getErrorPromise } from 'return-style'

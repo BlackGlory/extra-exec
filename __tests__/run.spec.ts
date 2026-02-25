@@ -1,3 +1,4 @@
+import { describe, test, expect } from 'vitest'
 import { run } from '@src/run.js'
 import { FailedError, KilledError } from '@src/errors.js'
 import { getErrorPromise } from 'return-style'

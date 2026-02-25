@@ -1,7 +1,7 @@
 import { spawn } from 'child_process'
 import { toArrayAsync, isntNull } from '@blackglory/prelude'
 import { FailedError, KilledError } from '@src/errors.js'
-import { mergeStreams, throwIfAborted } from '@src/utils.js'
+import { mergeStreams } from '@src/utils.js'
 
 /**
  * @throws {FailedError}
@@ -25,7 +25,7 @@ export function evaluate(
   } = {}
 ): Promise<string> {
   return new Promise((resolve, reject) => {
-    if (signal) throwIfAborted(signal)
+    signal?.throwIfAborted()
 
     const childProcess = spawn(
       command
