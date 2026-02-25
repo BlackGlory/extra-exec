@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.6](https://github.com/BlackGlory/extra-exec/compare/v0.1.5...v0.1.6) (2026-02-25)
+
+
+### Bug Fixes
+
+* remove `signal.throwIfAborted()` ([2e7ff06](https://github.com/BlackGlory/extra-exec/commit/2e7ff06178e44b63affa27fd737d1fabfb2e15e2))
+
 ### [0.1.5](https://github.com/BlackGlory/extra-exec/compare/v0.1.4...v0.1.5) (2025-03-13)
 
 
