@@ -1,8 +1,7 @@
 import { spawn } from 'child_process'
 import { toArrayAsync, isntNull, isntUndefined } from '@blackglory/prelude'
 import { FailedError, KilledError } from '@src/errors.js'
-import { mergeStreams } from '@src/utils.js'
-import kill from 'tree-kill'
+import { kill, mergeStreams } from '@src/utils.js'
 
 /**
  * @throws {FailedError}
