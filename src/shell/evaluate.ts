@@ -1,5 +1,5 @@
 import { spawn } from 'child_process'
-import { toArrayAsync, isntNull } from '@blackglory/prelude'
+import { toArrayAsync, isntNull, isntUndefined } from '@blackglory/prelude'
 import { FailedError, KilledError } from '@src/errors.js'
 import { mergeStreams } from '@src/utils.js'
 
@@ -38,7 +38,7 @@ export function evaluate(
       }
     )
     signal?.addEventListener('abort', () => {
-      if (childProcess.pid !== undefined) {
+      if (isntUndefined(childProcess.pid)) {
         process.kill(-childProcess.pid, posixSignalOnAbort)
       }
     })
