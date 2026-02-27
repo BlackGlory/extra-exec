@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.1](https://github.com/BlackGlory/extra-exec/compare/v0.2.0...v0.2.1) (2026-02-27)
+
+
+### Features
+
+* **kill:** improve robustness ([ae19b18](https://github.com/BlackGlory/extra-exec/commit/ae19b18e8a36f995794c571318cb7366c209a268))
+
+
+### Bug Fixes
+
+* **merge-streams:** an edge case ([71f6d9e](https://github.com/BlackGlory/extra-exec/commit/71f6d9efb76f9ea28fb024748d53a699490764ca))
+
 ## [0.2.0](https://github.com/BlackGlory/extra-exec/compare/v0.1.7...v0.2.0) (2026-02-25)
 
 
